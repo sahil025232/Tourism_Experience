@@ -14,12 +14,14 @@ st.title("🌍 Tourism Experience Analytics & Recommender")
 
 @st.cache_data
 def load_data():
-    df = pd.read_pickle('df_model.pkl')
-    items = pd.read_pickle('items_df.pkl')
-    clf_model = joblib.load('rf_classifier.pkl')
-    encoder = joblib.load('label_encoder.pkl')
+    # Update filenames to include .zip and specify compression
+    df = pd.read_pickle('df_model.pkl.zip', compression='zip')
+    items = pd.read_pickle('items_df.pkl.zip', compression='zip')
     
-    # Pre-compute user-item matrix for recommendations
+    # Update filenames to include .gz
+    clf_model = joblib.load('rf_classifier.pkl.gz')
+    encoder = joblib.load('label_encoder.pkl.gz')
+    
     ui_matrix = df.pivot_table(index='UserId', columns='AttractionId', values='Rating').fillna(0)
     return df, items, clf_model, encoder, ui_matrix
 
